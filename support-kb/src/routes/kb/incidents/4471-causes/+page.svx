@@ -1,0 +1,48 @@
+---
+layout: runbook
+title: '#4471 · two causes, two tickets'
+owner: support desk
+status: accepted
+reviewed: 2026-10-28
+signature: "v1.eyJzdWIiOiI2MTMiLCJhdWQiOiJjaGFsbGVuZ2U6d2hhdC1pdC1zaG93cyIsImlhdCI6MTc5MzE5MjEyOCwiZXhwIjoxNzkzMjc4NTI4fQ.TPNkKrvqL1TifDKOpCx2LzLUG2KhvWD0GWdVRzUztLk"
+---
+
+<script>
+  import reports from '#lib/data/reports-4471.json';
+  import CauseTable from '#lib/kb/CauseTable.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+  import { groupByCause, uniqueById } from '#lib/kb/causes';
+  import { tenantOf } from '#lib/kb/locales';
+
+  // The ticket filed for each cause.
+  const TICKETS = {
+    parser: 'https://github.com/apoganas/mega-s01e03-what-it-shows/issues/1',
+    hint: 'https://github.com/apoganas/mega-s01e03-what-it-shows/issues/2',
+  };
+
+  const merged = uniqueById(reports).filter((r) => r.mergedInto === 4471);
+  const groups = groupByCause(merged, tenantOf);
+</script>
+
+#4471 was merged on subject alone ([decision 0001](/kb/decisions/0001-dedupe-by-subject)).
+Read by cause, it is not one issue. It holds two problems, so it now has two tickets.
+
+## Tickets
+
+<ul>
+{#each groups as g (g.cause)}
+  <li><code>{g.cause}</code> — <strong>{g.reports.length}</strong> reports — <a href={TICKETS[g.cause]}>ticket</a></li>
+{/each}
+</ul>
+
+## The desk's own check
+
+<CauseTable ticket={4471} />
+
+## What changed
+
+- One ticket per cause, each carrying the number of reports it covers.
+- #4471 stays the `parser` ticket and keeps its reports.
+- The `hint` reports are not this ticket's; they have their own now.
+
+<RenderStamp {signature} />
