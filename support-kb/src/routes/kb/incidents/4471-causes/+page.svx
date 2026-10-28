@@ -14,10 +14,10 @@ signature: "v1.eyJzdWIiOiI2MTMiLCJhdWQiOiJjaGFsbGVuZ2U6d2hhdC1pdC1zaG93cyIsImlhd
   import { groupByCause, uniqueById } from '#lib/kb/causes';
   import { tenantOf } from '#lib/kb/locales';
 
-  // The ticket filed for each cause.
+  // The ticket filed for each cause, and what the desk did with it.
   const TICKETS = {
-    parser: 'https://github.com/apoganas/mega-s01e03-what-it-shows/issues/1',
-    hint: 'https://github.com/apoganas/mega-s01e03-what-it-shows/issues/2',
+    parser: { url: 'https://github.com/apoganas/mega-s01e03-what-it-shows/issues/1', status: 'fixed', why: 'fix(dates): parse dd/mm for eu locales' },
+    hint: { url: 'https://github.com/apoganas/mega-s01e03-what-it-shows/issues/2', status: "won't fix", why: 'booking-v3 form retired' },
   };
 
   const merged = uniqueById(reports).filter((r) => r.mergedInto === 4471);
@@ -25,19 +25,24 @@ signature: "v1.eyJzdWIiOiI2MTMiLCJhdWQiOiJjaGFsbGVuZ2U6d2hhdC1pdC1zaG93cyIsImlhd
 </script>
 
 #4471 was merged on subject alone ([decision 0001](/kb/decisions/0001-dedupe-by-subject)).
-Read by cause, it is not one issue. It holds two problems, so it now has two tickets.
+Read by cause, it is not one issue. It holds two problems, so it has two tickets.
 
 ## Tickets
 
 <ul>
 {#each groups as g (g.cause)}
-  <li><code>{g.cause}</code> — <strong>{g.reports.length}</strong> reports — <a href={TICKETS[g.cause]}>ticket</a></li>
+  <li><code>{g.cause}</code> — <strong>{g.reports.length}</strong> reports — <a href={TICKETS[g.cause].url}>ticket</a> — <b>{TICKETS[g.cause].status}</b></li>
 {/each}
 </ul>
 
 ## The desk's own check
 
 <CauseTable ticket={4471} />
+
+## Outcome — #4471 closed 05 Oct
+
+- <code>parser</code> — **fixed**: <code>fix(dates): parse dd/mm for eu locales</code>.
+- <code>hint</code> — **won't fix**: booking-v3 form retired.
 
 ## What changed
 

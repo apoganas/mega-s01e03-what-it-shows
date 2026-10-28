@@ -12,6 +12,11 @@ problems** and needs **two tickets**.
 | `parser` — the shared date parser reads month-first and flips the day for day-first tenants | **379** | [issue #1](https://github.com/apoganas/mega-s01e03-what-it-shows/issues/1) |
 | `hint` — `booking-v3`'s `MM/DD/YYYY` hint flips the day for those tenants | **33** | [issue #2](https://github.com/apoganas/mega-s01e03-what-it-shows/issues/2) |
 
+## Outcome (desk update, #4471 closed 05 Oct)
+
+- `parser` — **fixed** (`fix(dates): parse dd/mm for eu locales`).
+- `hint` — **won't fix** (`booking-v3 form retired`).
+
 ## The page about them
 
 - Source: [`support-kb/src/routes/kb/incidents/4471-causes/+page.svx`](support-kb/src/routes/kb/incidents/4471-causes/+page.svx) — signed kb page (frontmatter `signature`, ends with `<RenderStamp />`).
